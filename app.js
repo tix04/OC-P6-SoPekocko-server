@@ -2,7 +2,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Sauce = require('./models/sauce');
+
+const sauceRoutes = require('./routes/sauce');
 
 const app = express();
 
@@ -22,10 +23,8 @@ app.use((req, res, next) => {
     next();
   });
 
-  app.use(bodyParser.json());
+app.use(bodyParser.json());
 
-app.use((req,res) => {
-    res.json({message: 'Your request was successful'});
-});
+app.use('/api/sauces', sauceRoutes);
 
 module.exports = app;
