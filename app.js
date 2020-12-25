@@ -1,11 +1,3 @@
-/*****************These are the info required to connect to the mongo DB Database on mongo DB Atlas *******************/
-
-//SRV Url: mongodb+srv://AJ_OCWDP6:<password>@sopekockoocp6.klqdq.mongodb.net/<dbname>?retryWrites=true&w=majority
-//ClusterName: soPekockoOCP6
-//UserName: AJsopekocko4
-//Password: newPass4
-//Database Name: soPekocko
-
 
 const express = require('express');
 const bodyParser = require('body-parser');
