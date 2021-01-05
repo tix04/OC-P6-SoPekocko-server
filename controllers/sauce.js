@@ -1,25 +1,27 @@
 const SauceModel = require('../models/sauce');
-const fs = require('fs'); 
+const fs = require('fs');
 
-exports.createSauce = (req, res, next) => {
-  let initialAmount = 0;
-  let emptyArray = [];
 
-  req.body.sauce = JSON.parse(req.body.sauce);
-  const url = req.protocol + '://' + req.get('host');
-  const sauce = new SauceModel({
-    userId: req.body.sauce.userId,
-    name: req.body.sauce.name,
-    manufacturer: req.body.sauce.manufacturer,
-    description: req.body.sauce.description,
-    mainPepper: req.body.sauce.mainPepper,
-    imageUrl: url + '/images/' + req.file.filename,
-    heat: req.body.sauce.heat,
-    likes: initialAmount,
-    dislikes: initialAmount,
-    usersLiked: JSON.stringify(emptyArray),
-    usersDisliked: JSON.stringify(emptyArray)
-  });
+exports.createSauce =(req, res, next) => {
+  
+    let initialAmount = 0;
+    let emptyArray = [];
+
+    req.body.sauce// = JSON.parse(req.body.sauce);
+    const url = req.protocol + '://' + req.get('host');
+    const sauce = new SauceModel({
+      userId: req.body.sauce.userId,
+      name: req.body.sauce.name,
+      manufacturer: req.body.sauce.manufacturer,
+      description: req.body.sauce.description,
+      mainPepper: req.body.sauce.mainPepper,
+      imageUrl: url + '/images/' + req.file.filename,
+      heat: req.body.sauce.heat,
+      likes: initialAmount,
+      dislikes: initialAmount,
+      usersLiked: JSON.stringify(emptyArray),
+      usersDisliked: JSON.stringify(emptyArray)
+    }); 
   sauce.save().then(
     () => {
       res.status(201).json({
