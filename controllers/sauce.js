@@ -47,47 +47,47 @@ exports.setLikes = (req, res, next) => {
   SauceModel.findOne({_id: req.params.id}).then(
     (sauceFound) => {
         let sauce = new SauceModel({ _id: req.params._id });
-        
+     
         if(like === 1) {
           let usersLiked = JSON.parse(sauceFound.usersLiked);
-                usersLiked.push(userId);
-                updatedArray = JSON.stringify(usersLiked);
-                likes = sauceFound.likes + 1;
-                console.log(updatedArray, likes);
+          usersLiked.push(userId);
+          updatedArray = JSON.stringify(usersLiked);
+          likes = sauceFound.likes + 1;
+          console.log(updatedArray, likes);
 
-                sauce = {
-                    _id: req.params.id,
-                    userId: sauceFound.userId,
-                    name: sauceFound.name,
-                    manufacturer: sauceFound.manufacturer,
-                    description: sauceFound.description,
-                    imageUrl: sauceFound.imageUrl,
-                    heat: sauceFound.heat,
-                    likes: likes,
-                    dislikes: sauceFound.dislikes,
-                    usersLiked: updatedArray,
-                    usersDisliked: sauceFound.usersDisliked
-                };
+          sauce = {
+              _id: req.params.id,
+              userId: sauceFound.userId,
+              name: sauceFound.name,
+              manufacturer: sauceFound.manufacturer,
+              description: sauceFound.description,
+              imageUrl: sauceFound.imageUrl,
+              heat: sauceFound.heat,
+              likes: likes,
+              dislikes: sauceFound.dislikes,
+              usersLiked: updatedArray,
+              usersDisliked: sauceFound.usersDisliked
+          };
         }else if (like === -1) {
           let usersDisliked = JSON.parse(sauceFound.usersDisliked);
-                usersDisliked.push(userId);
-                updatedArray = JSON.stringify(usersDisliked);
-                likes = sauceFound.dislikes + 1;
-                console.log(updatedArray, likes);
+          usersDisliked.push(userId);
+          updatedArray = JSON.stringify(usersDisliked);
+          likes = sauceFound.dislikes + 1;
+          console.log(updatedArray, likes);
 
-                sauce = {
-                    _id: req.params.id,
-                    userId: sauceFound.userId,
-                    name: sauceFound.name,
-                    manufacturer: sauceFound.manufacturer,
-                    description: sauceFound.description,
-                    imageUrl: sauceFound.imageUrl,
-                    heat: sauceFound.heat,
-                    likes: sauceFound.likes,
-                    dislikes: likes,
-                    usersLiked: sauceFound.usersLiked,
-                    usersDisliked: updatedArray
-                };
+          sauce = {
+              _id: req.params.id,
+              userId: sauceFound.userId,
+              name: sauceFound.name,
+              manufacturer: sauceFound.manufacturer,
+              description: sauceFound.description,
+              imageUrl: sauceFound.imageUrl,
+              heat: sauceFound.heat,
+              likes: sauceFound.likes,
+              dislikes: likes,
+              usersLiked: sauceFound.usersLiked,
+              usersDisliked: updatedArray
+          };
         } else if (like === 0) {
           usersLikedArray = JSON.parse(sauceFound.usersLiked);
           usersDislikedArray = JSON.parse(sauceFound.usersDisliked);
