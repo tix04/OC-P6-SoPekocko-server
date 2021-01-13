@@ -1,15 +1,43 @@
-const likeValidator = (req, res, next) => {
-    let userId = req.body.userId;
-    let like = req.body.like;
-    let usersLikedArray = JSON.parse(sauceFound.usersLiked);
-    let usersDislikedArray = JSON.parse(sauceFound.usersDisliked);
-    if(usersLikedArray.includes(userID) || like === 1 ) {
-        return res.status(401).json({message: 'More than one likes is not authorized'});
-    }else if(usersLikedArray.includes(userID) || like === -1) {
-        return rest.status(401).json({message: 'More than one dislike is not authorized'});
-    }else {
-        next();
-    }
-};
+function validateLikesOrDislikes(array1, array2, userId, res) {
+    if(array1.includes(userId)) {
+        return res.status(403).json({
+          message: 'More than One Like or Dislike is unauthorized!!'
+        });
+      }else if(array2.includes(userId)){
+        return res.status(403).json({
+          message: 'Liking or disliking same sauce is unauthorized!!'
+        });
+      }
+}
 
-module.exports = likeValidator;
+function updateLikeOrDisliked(array, userId, val) {
+    let parsedArray = /*JSON.parse(array)*/array;
+    let likes;
+    let updatedArray;
+    parsedArray.push(userId);
+    updatedArray = JSON.stringify(parsedArray);
+    likes = val + 1;
+
+    let values = {array: updatedArray, likes: likes};
+    return values;
+}
+
+function verifyCancelledLike(array, userId, val) {
+    let userIdIndex = array.indexOf(userId);
+    let updatedArray;
+    let likes;
+    array.splice(userIdIndex, 1);
+    updatedArray = JSON.stringify(array);
+    likes = val - 1;
+
+    let values = {array: updatedArray, likes: likes};
+    return values;
+
+    
+}
+
+module.exports = {
+    validateLikes: validateLikesOrDislikes,
+    updateLikeOrDisliked: updateLikeOrDisliked,
+    verifyCancelledLike: verifyCancelledLike
+}

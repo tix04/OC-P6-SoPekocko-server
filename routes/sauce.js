@@ -10,7 +10,7 @@ const likeValidator = require('../middleware/likeValidator');
 
 
 router.post('/',  auth, multer, emptyDataValidator, inputValidator, sauceCtrl.createSauce);
-router.post('/:id/like', auth, likeValidator ,sauceCtrl.setLikes);
+router.post('/:id/like', auth, /*likeValidator ,*/sauceCtrl.setLikes);
 router.put('/:id', auth, multer, emptyDataValidator, inputValidator,sauceCtrl.modifySauce);
 router.delete('/:id',  auth, sauceCtrl.deleteSauce);
 router.get('/:id',  auth, sauceCtrl.getOneSauce); 
