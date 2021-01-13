@@ -16,7 +16,7 @@ exports.createSauce =(req, res, next) => {
     //Find a way not to save file to folder also if it is not correct mimetype
     //Right now file is saved on local file even if it is not saved on database
     if (!mimetypeRegExp.test(mimetype)) {
-      return res.status(400).json({
+      return res.status(415).json({ //Changed error code
         message: 'Only .png, .jpg and .jpeg files are allowed!'
       });
     }else {
