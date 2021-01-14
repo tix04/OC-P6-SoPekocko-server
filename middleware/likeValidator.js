@@ -1,15 +1,3 @@
-function validateLikesOrDislikes(array1, array2, userId, res) {
-    if(array1.includes(userId)) {
-        return res.status(403).json({
-          message: 'More than One Like or Dislike is unauthorized!!'
-        });
-      }else if(array2.includes(userId)){
-        return res.status(403).json({
-          message: 'Liking or disliking same sauce is unauthorized!!'
-        });
-      }
-}
-
 function updateLikeOrDisliked(array, userId, val) {
     let parsedArray = /*JSON.parse(array)*/array;
     let likes;
@@ -37,7 +25,6 @@ function verifyCancelledLike(array, userId, val) {
 }
 
 module.exports = {
-    validateLikes: validateLikesOrDislikes,
     updateLikeOrDisliked: updateLikeOrDisliked,
     verifyCancelledLike: verifyCancelledLike
 }

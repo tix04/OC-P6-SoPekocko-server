@@ -68,16 +68,65 @@ exports.setLikes = (req, res, next) => {
         let sauce = new SauceModel({ _id: req.params._id });
         
         if(like === 1) {
-          likeValidator.validateLikes(usersLikedArray, usersDislikedArray, userId, res);
-          /*if(usersLikedArray.includes(userId)) {
-            return res.status(403).json({
+          
+          if(usersLikedArray.includes(userId)) {
+            data = {array: sauceFound.usersLiked, likes: sauceFound.likes};
+            sauce = {
+              _id: req.params.id,
+              userId: sauceFound.userId,
+              name: sauceFound.name,
+              manufacturer: sauceFound.manufacturer,
+              description: sauceFound.description,
+              imageUrl: sauceFound.imageUrl,
+              heat: sauceFound.heat,
+              likes: data.likes,
+              dislikes: sauceFound.dislikes,
+              usersLiked: data.array,
+              usersDisliked: sauceFound.usersDisliked
+            };
+            SauceModel.updateOne({_id: req.params.id}, sauce).then(
+              () => {
+              return res.status(/*403*/204).json({
               message: 'More than One Like or Dislike is unauthorized!!'
+              });
+            }
+            ).catch(
+              (error) => {
+                  res.status(400).json({
+                  error: error
+              });
             });
+            /*return res.status(204).json({ //(403) initial error message. App halts
+              message: 'More than One Like or Dislike is unauthorized!!'
+              });*/
           }else if(usersDislikedArray.includes(userId)){
-            return res.status(403).json({
+            data = {array: sauceFound.usersDisliked, likes: sauceFound.dislikes};
+            sauce = {
+              _id: req.params.id,
+              userId: sauceFound.userId,
+              name: sauceFound.name,
+              manufacturer: sauceFound.manufacturer,
+              description: sauceFound.description,
+              imageUrl: sauceFound.imageUrl,
+              heat: sauceFound.heat,
+              likes: sauceFound.likes,
+              dislikes: data.likes,
+              usersLiked: sauceFound.usersLiked,
+              usersDisliked: data.array
+            };
+            SauceModel.updateOne({_id: req.params.id}, sauce).then(
+              () => {
+              return res.status(/*403*/204).json({
               message: 'Liking or disliking same sauce is unauthorized!!'
+              });
+            }
+            ).catch(
+              (error) => {
+                  res.status(400).json({
+                  error: error
+              });
             });
-          }else {*/
+          }else {
             data = likeValidator.updateLikeOrDisliked(usersLikedArray, userId, sauceFound.likes);
             sauce = {
               _id: req.params.id,
@@ -104,18 +153,73 @@ exports.setLikes = (req, res, next) => {
                     error: error
                 });
             });
-          //}
-        }else if(like === -1){
-          likeValidator.validateLikes(usersDislikedArray, usersLikedArray, userId, res);
-          /*if(usersDislikedArray.includes(userId)) {
-            return res.status(401).json({
-              message: 'More than One Like or Dislike is unauthorized!!'
-            });
-          }else if(usersLikedArray.includes(userId)){
-            return res.status(401).json({
+            /*return res.status(204).json({ //(403) initial error message. App halts
               message: 'Liking or disliking same sauce is unauthorized!!'
+              });*/
+          }
+        }else if(like === -1){
+         
+          if(usersDislikedArray.includes(userId)) {
+            data = {array: sauceFound.userDisliked, likes: sauceFound.dislikes};
+            sauce = {
+              _id: req.params.id,
+              userId: sauceFound.userId,
+              name: sauceFound.name,
+              manufacturer: sauceFound.manufacturer,
+              description: sauceFound.description,
+              imageUrl: sauceFound.imageUrl,
+              heat: sauceFound.heat,
+              likes: sauceFound.likes,
+              dislikes: data.likes,
+              usersLiked: sauceFound.usersLiked,
+              usersDisliked: data.array
+            };
+            SauceModel.updateOne({_id: req.params.id}, sauce).then(
+              () => {
+              return res.status(/*403*/204).json({
+              message: 'More than One Like or Dislike is unauthorized!!'
+              });
+            }
+            ).catch(
+              (error) => {
+                  res.status(400).json({
+                  error: error
+              });
             });
-          }else {*/
+            /*return res.status(204).json({ //(403) initial error message. App halts
+              message: 'More than One Like or Dislike is unauthorized!!'
+              });*/
+          }else if(usersLikedArray.includes(userId)){
+            data = {array: sauceFound.userLiked, likes: sauceFound.likes};
+            sauce = {
+              _id: req.params.id,
+              userId: sauceFound.userId,
+              name: sauceFound.name,
+              manufacturer: sauceFound.manufacturer,
+              description: sauceFound.description,
+              imageUrl: sauceFound.imageUrl,
+              heat: sauceFound.heat,
+              likes: data.likes,
+              dislikes: sauceFound.dislikes,
+              usersLiked: data.array,
+              usersDisliked: sauceFound.usersDisliked
+            };
+            SauceModel.updateOne({_id: req.params.id}, sauce).then(
+              () => {
+              return res.status(/*403*/204).json({
+              message: 'Liking or disliking same sauce is unauthorized!!'
+              });
+            }
+            ).catch(
+              (error) => {
+                  res.status(400).json({
+                  error: error
+              });
+            });
+            /*return res.status(204).json({ //(403) initial error message. App halts
+              message: 'Liking or disliking same sauce is unauthorized!!'
+              });*/
+          }else {
             data = likeValidator.updateLikeOrDisliked(usersDislikedArray, userId, sauceFound.dislikes);
             sauce = {
               _id: req.params.id,
@@ -142,7 +246,7 @@ exports.setLikes = (req, res, next) => {
                     error: error
                 });
             });
-          //}
+          }
         }else if(like === 0 && usersLikedArray.includes(userId)){
           
           data = likeValidator.verifyCancelledLike(usersLikedArray, userId, sauceFound.likes);
