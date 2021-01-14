@@ -6,7 +6,7 @@ exports.createSauce =(req, res, next) => {
   
     let initialAmount = 0;
     let emptyArray = [];
-    const url = req.protocol + '://' + req.get('host');
+    let url = req.protocol + '://' + req.get('host');
     let mimetypeRegExp = /jpeg|jpg|png|gif/;
     let authorizedFile = mimetypeRegExp.test(req.file.filename.extension);
     let mimetype = req.file.mimetype;
@@ -20,7 +20,7 @@ exports.createSauce =(req, res, next) => {
         message: 'Only .png, .jpg and .jpeg files are allowed!'
       });
     }else {
-      //req.file.filename = 
+      //req.file.filename = */
       
       const sauce = new SauceModel({
         userId: req.body.sauce.userId,
@@ -310,10 +310,12 @@ exports.setLikes = (req, res, next) => {
   };
 
 exports.getOneSauce = (req, res, next) => {
+  
   SauceModel.findOne({
-    _id: req.params.id
+    _id: req.params.id,
   }).then(
     (sauce) => {
+      
       res.status(200).json(sauce);
     }
   ).catch(
@@ -341,7 +343,7 @@ exports.modifySauce = (req, res, next) => {
     //Find a way not to save file to folder also if it is not correct mimetype
     //Right now file is saved on local file even if it is not saved on database
     //Also need to find a way to replace and delete old image from local files even if it changes in the database
-    //Nee to refactor this code , too many if else statements
+    //Need to refactor this code , too many if else statements
     if (!mimetypeRegExp.test(mimetype)) {
       return res.status(400).json({
         message: 'Only .png, .jpg and .jpeg files are allowed!'
@@ -355,16 +357,12 @@ exports.modifySauce = (req, res, next) => {
       mainPepper: req.body.sauce.mainPepper,
       imageUrl: url + '/images/' + req.file.filename,
       heat: req.body.sauce.heat,
-      /*likes: req.body.sauce.likes,
-      dislikes: req.body.sauce.dislikes,
-      usersLiked: req.body.sauce.usersLiked,
-      usersDisliked: req.body.sauce.usersDisliked*/
+      
     };
   }
     
   
-  } else {  //Commentend if else statements to see if this is the problem
-    //const url = req.protocol + '://' + req.get('host');
+  } else { 
     console.log(req.body);
     sauce = {
       _id: req.params.id,
@@ -372,13 +370,8 @@ exports.modifySauce = (req, res, next) => {
       name: req.body.name,
       manufacturer: req.body.manufacturer,
       description: req.body.description,
-      //imageUrl: url + '/images/' + req.file.filename,
-      //imageUrl: req.body.imageUrl,
       heat: req.body.heat,
-      /*likes: req.body.likes,
-      dislikes: req.body.dislikes,
-      usersLiked: req.body.usersLiked,
-      usersDisliked: req.body.usersDisliked*/
+     
     };
   }
   SauceModel.updateOne({_id: req.params.id}, sauce).then(

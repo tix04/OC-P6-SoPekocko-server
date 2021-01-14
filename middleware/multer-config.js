@@ -17,9 +17,14 @@ const storage = multer.diskStorage({
     console.log(file);
     const extension = MIME_TYPES[file.mimetype];
     
+    
     callback(null, name + Date.now() + '.' + extension);
-  }
+    
+  },
+  
 });
+
+
 //Validate only jpeg, jpg, png files
 /*const multerFilter = (req, file, callback) => {
   console.log('The program reached this stage');
@@ -77,7 +82,4 @@ const upload = multer({
   }
 });*/
 
-module.exports = multer({storage: storage}).single('image');// multer({/*upload: upload*/ storage: storage}).single('image');
-//module.exports = multer({storage}).single('image');
-/*module.exports = multer({storage: storage}).single('image');
-module.exports = multer({upload: upload}).single('image');*/
+module.exports = multer({storage: storage}).single('image');
