@@ -330,10 +330,9 @@ exports.getOneSauce = (req, res, next) => {
 exports.modifySauce = (req, res, next) => {
   let sauce = new SauceModel({ _id: req.params._id });
   
-  if (req.file) {  //Commented out if else statement to ssee if this is the problem
+  if (req.file) {
     const url = req.protocol + '://' + req.get('host');
-    //req.body.sauce = JSON.parse(req.body.sauce);
-    //console.log(req.body.sauce);
+    
     let mimetypeRegExp = /jpeg|jpg|png|gif/;
     let authorizedFile = mimetypeRegExp.test(req.file.filename.extension);
     let mimetype = req.file.mimetype;
