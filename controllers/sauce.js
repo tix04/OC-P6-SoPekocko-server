@@ -86,7 +86,7 @@ exports.setLikes = (req, res, next) => {
             };
             SauceModel.updateOne({_id: req.params.id}, sauce).then(
               () => {
-              return res.status(/*403*/204).json({
+              return res.status(/*403*//*204*/202).json({
               message: 'More than One Like or Dislike is unauthorized!!'
               });
             }
@@ -116,7 +116,7 @@ exports.setLikes = (req, res, next) => {
             };
             SauceModel.updateOne({_id: req.params.id}, sauce).then(
               () => {
-              return res.status(/*403*/204).json({
+              return res.status(/*403*//*204*/202).json({
               message: 'Liking or disliking same sauce is unauthorized!!'
               });
             }
@@ -160,7 +160,7 @@ exports.setLikes = (req, res, next) => {
         }else if(like === -1){
          
           if(usersDislikedArray.includes(userId)) {
-            data = {array: sauceFound.userDisliked, likes: sauceFound.dislikes};
+            data = {array: sauceFound.usersDisliked, likes: sauceFound.dislikes};
             sauce = {
               _id: req.params.id,
               userId: sauceFound.userId,
@@ -176,7 +176,7 @@ exports.setLikes = (req, res, next) => {
             };
             SauceModel.updateOne({_id: req.params.id}, sauce).then(
               () => {
-              return res.status(/*403*/204).json({
+              return res.status(/*403*//*204*/202).json({
               message: 'More than One Like or Dislike is unauthorized!!'
               });
             }
@@ -190,7 +190,7 @@ exports.setLikes = (req, res, next) => {
               message: 'More than One Like or Dislike is unauthorized!!'
               });*/
           }else if(usersLikedArray.includes(userId)){
-            data = {array: sauceFound.userLiked, likes: sauceFound.likes};
+            data = {array: sauceFound.usersLiked, likes: sauceFound.likes};
             sauce = {
               _id: req.params.id,
               userId: sauceFound.userId,
@@ -206,7 +206,7 @@ exports.setLikes = (req, res, next) => {
             };
             SauceModel.updateOne({_id: req.params.id}, sauce).then(
               () => {
-              return res.status(/*403*/204).json({
+              return res.status(/*403*//*204*/202).json({
               message: 'Liking or disliking same sauce is unauthorized!!'
               });
             }

@@ -7,11 +7,12 @@ check('description').trim().escape().not().isEmpty().withMessage('These Fields c
 check('mainPepper').trim().escape().not().isEmpty().withMessage('These Fields can not be empty'),
     (req, res, next) => {
         const errors = validationResult(req.body.sauce); //req.body.sauce
-        console.log('express-validator test passed');
+        
 
         if (!errors.isEmpty()) {
             return res.status(422).json(errors.array());
         } else {
+            console.log('express-validator test passed');
             next();
         }
     }
